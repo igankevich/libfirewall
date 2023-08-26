@@ -4,6 +4,7 @@ set -ex
 #if test "$GITHUB_REF_TYPE" != "tag"; then
 #    exit 0
 #fi
+env | grep GITHUB | sort
 curl -sL \
     -X POST \
     -H "Accept: application/vnd.github+json" \
