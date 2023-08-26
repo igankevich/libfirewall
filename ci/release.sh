@@ -1,11 +1,10 @@
 #!/bin/sh
 set -ex
+# TODO
 #if test "$GITHUB_REF_TYPE" != "tag"; then
 #    exit 0
 #fi
-# TODO
-GITHUB_REF_NAME=0.0.0
-curl -L \
+curl -sL \
     -X POST \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN" \
@@ -22,9 +21,10 @@ curl -L \
     "prerelease":false,
     "generate_release_notes":true
 }'
+cat /tmp/response
 release_id="$(jq -r .id /tmp/response)"
 target=x86_64-unknown-linux-gnu
-curl -L \
+curl -sL \
     -X POST \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN" \
