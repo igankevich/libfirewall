@@ -1,0 +1,15 @@
+---
+name: CI
+on: [push]
+jobs:
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1.72
+    steps:
+      - name: Init image
+        run: ./ci/init.sh
+      - name: Lint
+        run: ./ci/lint.sh
+      - name: Test
+        run: ./ci/test.sh
