@@ -7,6 +7,11 @@ jobs:
     container:
       image: rust:1.72
     steps:
+      - name: Check
+        run: |
+          set -x
+          pwd
+          ls -l
       - name: Init image
         run: ./ci/init.sh
       - name: Lint
