@@ -1,10 +1,10 @@
 [package]
-name = "lockdown"
+name = "libfirewall"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "lockdown"
+name = "firewall"
 crate-type = ["cdylib"]
 
 [dependencies]
