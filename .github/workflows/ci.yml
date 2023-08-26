@@ -15,3 +15,7 @@ jobs:
         run: ./ci/lint.sh
       - name: Test
         run: ./ci/test.sh
+      - name: Binaries
+        run: ./ci/binaries.sh
+      - name: Release
+        run: ./ci/release.sh
