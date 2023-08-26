@@ -2,7 +2,7 @@
 name: CI
 on: [push]
 jobs:
-  container-test-job:
+  ci:
     runs-on: ubuntu-latest
     container:
       image: rust:1.72
@@ -12,6 +12,7 @@ jobs:
           set -x
           pwd
           ls -l
+          find /
       - name: Init image
         run: ./ci/init.sh
       - name: Lint
