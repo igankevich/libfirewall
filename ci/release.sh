@@ -24,7 +24,7 @@ curl -sL \
 }'
 cat /tmp/response
 release_id="$(jq -r .id /tmp/response)"
-for file in binaries/*.so; do
+for file in libfirewall*.so; do
     name="$(basename "$file")"
     curl -sL \
         -X POST \
