@@ -2,6 +2,17 @@
 name = "libfirewall"
 version = "0.1.0"
 edition = "2021"
+include = [
+    "**/*.rs",
+    "Cargo.toml",
+    "Cargo.lock"
+]
+homepage = "https://github.com/igankevich/libfirewall/"
+repository = "https://github.com/igankevich/libfirewall/"
+documentation = "https://github.com/igankevich/libfirewall/"
+description = "Regain the control of outgoing traffic in your CI/CD pipelines"
+license = "GPL-3.0"
+publish = false
 
 [lib]
 name = "firewall"

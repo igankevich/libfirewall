@@ -4,8 +4,7 @@ set -ex
 apt-get -qq update
 apt-get -qq install --no-install-recommends \
     pre-commit \
-    shellcheck \
-    jq
+    shellcheck
 
 rustup toolchain add nightly --target x86_64-unknown-linux-gnu
 rustup toolchain add 1.72 \

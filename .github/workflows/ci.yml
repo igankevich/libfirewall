@@ -2,12 +2,10 @@
 name: CI
 on: [push]
 jobs:
-  ci:
+  test:
     runs-on: ubuntu-latest
     container:
       image: rust:1.72
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -17,7 +15,20 @@ jobs:
         run: ./ci/lint.sh
       - name: Test
         run: ./ci/test.sh
+  build-debian-12:
+    needs: test
+    runs-on: ubuntu-latest
+    container:
+      image: debian:12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init image
+        run: ./ci/init-build.sh
       - name: Binaries
         run: ./ci/binaries.sh
-      - name: Release
-        run: ./ci/release.sh
+      - name: Save binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: libfirewall-debian-12
+          path: binaries/libfirewall-debian-12.so
