@@ -15,11 +15,15 @@ jobs:
         run: ./ci/lint.sh
       - name: Test
         run: ./ci/test.sh
-  build-debian-12:
+  build:
     needs: test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        id: [debian]
+        version_id: [12]
     container:
-      image: debian:12
+      image: ${{ matrix.id }}:${{ matrix.version_id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,11 +34,11 @@ jobs:
       - name: Save binaries
         uses: actions/upload-artifact@v3
         with:
-          name: libfirewall-debian-12
-          path: binaries/libfirewall-debian-12.so
+          name: libfirewall-${{ matrix.id }}-${{ matrix.version_id }}
+          path: binaries/libfirewall-${{ matrix.id }}-${{ matrix.version_id }}.so
   release:
     needs:
-      - build-debian-12
+      - build
     runs-on: ubuntu-latest
     container:
       image: rust:1.72
