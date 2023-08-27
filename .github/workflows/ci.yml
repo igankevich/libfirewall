@@ -32,3 +32,22 @@ jobs:
         with:
           name: libfirewall-debian-12
           path: binaries/libfirewall-debian-12.so
+  release:
+    needs:
+      - build-debian-12
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1.72
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init image
+        run: ./ci/init-release.sh
+      - name: Get binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: libfirewall-debian-12
+      - name: Release
+        run: ./ci/release.sh
