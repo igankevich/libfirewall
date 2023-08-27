@@ -1,0 +1,78 @@
+---
+name: CI
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1.72
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init image
+        run: ./ci/init.sh
+      - name: Lint
+        run: ./ci/lint.sh
+      - name: Test
+        run: ./ci/test.sh
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distribution:
+          - id: debian
+            version_id: 11
+          - id: debian
+            version_id: 12
+          - id: ubuntu
+            version_id: 20.04
+          - id: ubuntu
+            version_id: 22.04
+    container:
+      image: ${{ matrix.distribution.id }}:${{ matrix.distribution.version_id }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init image
+        run: ./ci/init-build.sh
+      - name: Binaries
+        run: ./ci/binaries.sh
+      - name: Save binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: libfirewall-${{ matrix.distribution.id }}-${{ matrix.distribution.version_id
+            }}
+          path: libfirewall-${{ matrix.distribution.id }}-${{ matrix.distribution.version_id
+            }}.so
+  release:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    container:
+      image: rust:1.72
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init image
+        run: ./ci/init-release.sh
+      - name: Get binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: libfirewall-debian-11
+      - name: Get binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: libfirewall-debian-12
+      - name: Get binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: libfirewall-ubuntu-22.04
+      - name: Get binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: libfirewall-ubuntu-20.04
+      - name: Release
+        run: ./ci/release.sh

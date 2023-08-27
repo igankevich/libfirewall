@@ -55,11 +55,9 @@ extern "C" fn getaddrinfo(
         Ok(name) => {
             if Context::get().allowed_names.contain(name) {
                 log!("allow {}", name);
-                return unsafe {
-                    (get_old_functions().getaddrinfo)(node, service, hints, res)
-                };
+                return unsafe { (get_old_functions().getaddrinfo)(node, service, hints, res) };
             } else {
-                log!("block {}", name);
+                log!("BLOCK {}", name);
             }
         }
         Err(e) => {
