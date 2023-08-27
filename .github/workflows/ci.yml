@@ -20,13 +20,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        id:
-          - debian-11
-          - debian-12
-          - ubuntu-20.04
-          - ubuntu-22.04
+        distribution:
+          - id: debian
+            version_id: 11
+          - id: debian
+            version_id: 12
+          - id: ubuntu
+            version_id: 20.04
+          - id: ubuntu
+            version_id: 22.04
     container:
-      image: ${{ matrix.id }}:${{ matrix.version_id }}
+      image: ${{ matrix.distribution.id }}:${{ matrix.distribution.version_id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,8 +41,10 @@ jobs:
       - name: Save binaries
         uses: actions/upload-artifact@v3
         with:
-          name: libfirewall-${{ matrix.id }}
-          path: libfirewall-${{ matrix.id }}.so
+          name: libfirewall-${{ matrix.distribution.id }}-${{ matrix.distribution.version_id
+            }}
+          path: libfirewall-${{ matrix.distribution.id }}-${{ matrix.distribution.version_id
+            }}.so
   release:
     needs:
       - build
