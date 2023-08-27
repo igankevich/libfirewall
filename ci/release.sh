@@ -13,7 +13,7 @@ curl -sL \
     -d '
 {
     "tag_name":"'"$GITHUB_REF_NAME"'",
-    "target_commitish":"'"$GITHUB_REF_NAME"'",
+    "target_commitish":"'"$GITHUB_SHA"'",
     "name":"'"$GITHUB_REF_NAME"'",
     "body":"'"Release $GITHUB_REF_NAME"'",
     "draft":true,
