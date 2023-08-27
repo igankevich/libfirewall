@@ -1,10 +1,8 @@
 #!/bin/sh
 set -ex
-# TODO
-#if test "$GITHUB_REF_TYPE" != "tag"; then
-#    exit 0
-#fi
-#env | grep GITHUB | sort
+if test "$GITHUB_REF_TYPE" != "tag"; then
+    exit 0
+fi
 curl -sL \
     -X POST \
     -H "Accept: application/vnd.github+json" \

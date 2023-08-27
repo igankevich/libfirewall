@@ -20,8 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        id: [debian]
-        version_id: [11, 12]
+        id:
+          - debian-11
+          - debian-12
+          - ubuntu-20.04
+          - ubuntu-22.04
     container:
       image: ${{ matrix.id }}:${{ matrix.version_id }}
     steps:
@@ -34,8 +37,8 @@ jobs:
       - name: Save binaries
         uses: actions/upload-artifact@v3
         with:
-          name: libfirewall-${{ matrix.id }}-${{ matrix.version_id }}
-          path: libfirewall-${{ matrix.id }}-${{ matrix.version_id }}.so
+          name: libfirewall-${{ matrix.id }}
+          path: libfirewall-${{ matrix.id }}.so
   release:
     needs:
       - build
@@ -57,5 +60,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: libfirewall-debian-12
+      - name: Get binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: libfirewall-ubuntu-22.04
+      - name: Get binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: libfirewall-ubuntu-20.04
       - name: Release
         run: ./ci/release.sh
