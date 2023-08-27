@@ -11,6 +11,4 @@ env RUSTFLAGS="$rust_flags" \
     --target "$target" \
     --no-default-features
 . /etc/os-release
-outfile="binaries/libfirewall-$ID-$VERSION_ID.so"
-mkdir -p binaries
-mv target/"$target"/release/libfirewall.so "$outfile"
+mv target/"$target"/release/libfirewall.so libfirewall-"$ID"-"$VERSION_ID".so
