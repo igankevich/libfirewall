@@ -30,6 +30,7 @@ RUN . /etc/os-release \
     https://github.com/igankevich/libfirewall/releases/download/0.1.0/libfirewall-$ID-$VERSION_ID.so
 ENV LD_PRELOAD=/usr/local/lib/libfirewall.so
 ```
+If you do not use Docker in your pipeline then put the same commands directly in the pipeline script.
 
 Then in your CI/CD pipeline define a list of allowed domain names.
 By default all domain names are blocked.
