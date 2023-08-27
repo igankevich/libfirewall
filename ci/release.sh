@@ -16,7 +16,7 @@ curl -sL \
     "target_commitish":"'"$GITHUB_SHA"'",
     "name":"'"$GITHUB_REF_NAME"'",
     "body":"'"Release $GITHUB_REF_NAME"'",
-    "draft":true,
+    "draft":false,
     "prerelease":false,
     "generate_release_notes":true
 }'
