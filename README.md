@@ -1,5 +1,7 @@
 # Introduction
 
+❗ **This toy project was supeseeded by [cijail](https://github.com/staex-io/cijail) — a robust Seccomp-based alternative.** ❗
+
 Libfirewall is a library that aims to protect your CI/CD pipelines from supply chain attacks.
 The best way to protect your pipelines is to run them on your premises behind a restrictive firewall and HTTP proxy server, however,
 this is not realisitc for small teams.
